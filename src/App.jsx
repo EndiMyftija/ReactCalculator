@@ -10,12 +10,12 @@ function App() {
 
   const [mode, setMode] = useState('view');
 
-  const handleAdd = (key, sign, number, disabled) => {
-    const newRow = {key:key, sign:sign, number:number, disabled:disabled};
+  const handleAdd = (obj) => {
+    const newRow = {key: obj.key, sign: obj.sign, number: obj.number, disabled: obj.disabled};
     setRows((oldRows) => [...oldRows, newRow]);
     setNumberRows((oldNumberRows) => oldNumberRows+1);
     setSum((oldSum) => {
-      return sign === '+' ? oldSum + Number(number) : oldSum - Number(number);
+      return obj.sign === '+' ? oldSum + Number(obj.number) : oldSum - Number(obj.number);
     })
     setMode('view');
     console.log(sum);
@@ -95,8 +95,8 @@ function App() {
 
   return (
     <>
-      <div className="outerWrapper">
-          <button className="addRow" onClick={() => setMode('add')}>Add Row</button>
+      <div className="mt-4">
+          <button className="mb-3" onClick={() => setMode('add')}>Add Row</button>
           <RowsList rows={rows} mode={'view'} onEdit={handleEdit} onDisable={handleDisable} onDelete={handleDelete}/>
 
           {mode === 'add' && (
@@ -105,7 +105,7 @@ function App() {
             </>
             )
           }
-        <p>Sum is {sum}</p>
+        <h4 className="text-align-left">Sum: {sum}</h4>
       </div>
     </>
   )

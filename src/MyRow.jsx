@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function MyRow(props) {
     const [selectedSign, setSelectedSign] = useState(props.sign || '+');
-    const [number, setNumber] = useState(props.number || 100);
+    const [number, setNumber] = useState(props.number || null);
     const [mode, setMode] = useState(props.mode);
     const [disabled, setDisabled] = useState(props.disabled || 'false');
 
@@ -41,6 +41,11 @@ function MyRow(props) {
         props.onDelete(props.rowKey);
     }
 
+    const handleAddClick = () => {
+        const object = {key: props.numberRows, sign: selectedSign, number: number, disabled: disabled}
+        props.onAdd(object);
+    }
+
     return (
         <>
             <select value={selectedSign} onChange={(e) => handleChange('sign', e.target.value)}>
@@ -57,7 +62,7 @@ function MyRow(props) {
             ) : (
                 <>
                     <button onClick={() => {
-                        props.onAdd(props.numberRows, selectedSign, number, disabled);
+                        handleAddClick();
                         setMode('view');
                     }}>Add</button>
                     <button onClick={props.onCancel}>Cancel</button>
